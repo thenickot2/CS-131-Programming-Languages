@@ -1,0 +1,51 @@
+	For hw1 I attempted to implement each function (and helper function) myself, with out using the
+list module functions of OCaml. With this goal I feel I have gained a great understanding of OCaml in
+a week.
+	The first several functions were very simple to create, and only involved simple design decisions.
+"subset" is a basic recursive function that required the creation of the helper function "member",
+which tests if an element exists in a list. Next, "equal_sets" was implemented very similar to "subset"
+by making use of member. However, it required the helper function "remove", which returns a list
+missing a given element, if it existed. "equal_sets" recursively steps through a list and removes
+common elements, and checks if both lists are empty lists (to return true). With "remove" and "member"
+implemented, "set_diff" was simple and similar. Importantly, it also exposed a bug, where "remove"
+was failing to remove all the elements in a list, matching a given variable.
+	"computed_fixed_point" was the first difficult function to implement, as it extended set theory to
+implement higher level functionality with OCaml. Once the problem was understood, "computed_fixed_point"
+was easily implemented as a single if-then statement as part of a recursive function. With that function
+implemented, "compute_periodic_point" required very little work to build off of. Now the recursive
+statement simply decrements p each count, and p must be 0 to return true. The only challenge thus far is
+building accurate test cases. For certain cases involving rounding, Piazza was invaluable.
+	"filter_blind_alleys" was a leap in difficulty. Without attending Friday discussion, I would not have
+understood the premise of the grammar problem, and the nature of dividing up expressions in to symbols.
+The bulk of the problem was identified to be building the list of terminal symbols given a set of rules.
+As the recursive function operates, elements need to be traversed multiple times to find all the relations
+of terminal symbols. My solution was to build the list of terminal symbols multiple times, and to check
+if the list of terminal symbols has grown each time, if not, then the function can return. In addition
+to the function "add_terminals", the simple function "isTerminal" needed to be implemented to do the
+simple equality check. Lastly, a challenge and problem was verifying the return type of "add_terminals".
+As it turned out, the syntax of OCaml required "member"'s parameters to be called in reverse, requiring
+a special implemented of "member", "member_reversed".
+	Besides the issue described above with "remove" and duplicates in a list, most of the testing went
+without a problem.
+
+val member_test0 : bool = true
+val member_test1 : bool = true
+val member_test2 : bool = false
+val member_test3 : bool = true
+val remove_test0 : int list = [2; 3]
+val remove_test1 : int list = [1; 3]
+val remove_test2 : int list = [1; 2; 2; 3]
+val subset_test0 : bool = true
+val subset_test1 : bool = true
+val subset_test2 : bool = true
+val subset_test3 : bool = false
+val proper_subset_test0 : bool = false
+val set_diff_test0 : int list = []
+val set_diff_test1 : int list = []
+val set_diff_test2 : int list = [3]
+val set_diff_test2 : int list = [1; 2; 3]
+val computed_fixed_point_test0 : bool = true
+val computed_fixed_point_test1 : bool = true
+val computed_periodic_point_test0 : bool = true
+val filter_blind_alleys_test0 : bool = true
+val filter_blind_alleys_test1 : bool = false

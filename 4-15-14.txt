@@ -1,0 +1,48 @@
+4-15-14
+
+Example Application for grammar (for non-PL) *Email*
+	Standardized for internet RFC(Request For Comment)
+	RFC 822,2822,S322
+		Message-ID: <a8%3.296137.23@cs.ucla.edu>	<- every email ever sent needs different message-id, standard specified by grammar
+		To:
+		Subject:
+		...
+	RFC 2822 -> msg-id="<"word *("." word)"@" atm *("."atom) ">"
+		*("."word) -> not BNF(Backus Normal Form), means repeat everything in paren, 0 or more times
+			no increase in power, could implement new nonTerminal
+			technical name for this 2822 practice -> EBNF(extended)
+		word= atom/quoted-string	-> "/" means or in this practice, from old terminal
+			or only in EBNF, not BNF
+		atom=1*<any CHAR except specials, SPACE, and CTLs>
+		specials="()<>@.\".[]
+		ctls=\000-\037
+		quoted-string=<">*'(qtext/quoted-pair)<">
+		qtext=<any CHAR except "\CR>
+		quoted-pair="\" CHAR
+		
+		question:Are strings tokens? Depends on grammar, in this case, no
+		there is a bug in 2822. CHAR=Ascii char \000-\177. You could put a null byte in to a message-id
+			in quoted-pair.
+		This grammar is not recursive. At the bottom of hierarchy is basic CHARs. Simplifies analysis.
+			Allows you to build a regular expression. You would not need to do hw2 to handle this expressions
+	Is it the case that EVERY recursive grammar cannot be turned in to a regular expression?
+		No. dws="."word dws		from 2822
+		Key notion is that the loop is at the end(tail recursion), allowing regex
+	
+	ISO standard for EBNF (says 2822 is ugly)
+		http://www.cl.cam.uk/~mgk25/iso-ebnf.html
+		"terminal symbol" or 'terminal symbol'
+		nonterminal symbol
+		operators: *(repetition), -(except), ,(concatenate), |(or), =(defn or rule), ;(terminator)
+		[option](0 or 1 times), {repetition}(0-inf), (*comment*)
+	
+		ISO standard for EBNF written in EBNF
+			syntax=syntax rule,{syntax rule};
+			syntax rule=meta id,'=',defns list,';';
+			defns list=defn,{'|',defn};
+			defn=term,{',',term};
+			
+Example from Scheme
+	<cond>->(cond <cond clause>+)
+		| (cond <cond clause>* (else<sequence>))
+Syntax Diagrams(railroad diagrams)

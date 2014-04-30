@@ -1,0 +1,54 @@
+HW#2 was a challenge to do in a functional programming language. 
+By nature, OCaml forces the programmer to write very efficient 
+code to parse the rules, demonstrating that it can be accomplished to 
+what can be expanded to a tree of specific options.
+
+I spent roughly 30 hours to get the code to the current state. Speaking 
+specifically to the awkish_grammar rule set, my code has no problem 
+parsing simple expressions such as "9" or "9+5". However, parsing anything 
+more complicated often returns unpredictable results. The source of the 
+problem is an unmaintainable approach to parsing the fragment, which is
+expanded on in the code skeleton below. Terminal symbols that range over
+a number of characters, such as "(" and ")" will return None, limiting
+the number of grammars the parse_prefix will work for.
+
+Lastly, I approached this project with the difficult, but elegant approach 
+proposed by Professor Eggert and Thuy. I implemented a matcher built upon 
+an and_matcher and an or_matcher. In addition, there is an auxilary 
+function, rule_matcher, to do the final matching to a terminal or nonterminal 
+symbol.
+
+Function definitions:
+	rule_matcher
+		accepts: rule_list current rule remaining_rules fragment derivation
+		rule_matcher takes the fragment, looks at the head, and matches it 
+		with a terminal or nonTerminal symbol.
+		The matcher is called recursively for a nonterminal symbol, and the 
+		acceptor(via and_matcher) is called for	terminal symbols.
+	
+	and_matcher 
+		accepts: rule_list current rules fragment derivation 
+		and_matcher, like or_matcher, follows the breakdown from discussion. 
+		The rules are further broken down, and rule_matcher is called on 
+		the rules and existing fragment. If a derivation and fragment is 
+		set in an option, and_matcher is recursively called on it to check 
+		for a longer fragment fitting a rule.
+
+	or_matcher
+		accepts: rule_list current rules fragment derivation
+		The first breakdown of rules, where and_matcher is called for every 
+		rule, appending that rule on to the derivation in the function call. 
+		It is worth noting that this part of the code was a major challenge 
+		for me. I was initially appending the rule on to the derivative 
+		after the function call, putting much of the derivation in reverse 
+		order. If and_matcher returns None, or_matcher is called on the 
+		next rule, otherwise the first rule is accepted.
+		
+	matcher
+		accepts: rule_list current fragment derivation
+		Builds the matcher with recursive calls to or_matcher
+		
+I hope my more difficult approach to the problem, steering clear of a brute 
+force method, warrants additional points in the presence of incorrect 
+answers for more complex expressions to parse. My approach should work for 
+most grammars, with the exception of those mentioned in the second paragraph.

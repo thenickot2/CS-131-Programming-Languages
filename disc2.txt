@@ -1,0 +1,33 @@
+make_or_matcher
+and make_and_matcher
+figure out input
+make_or_matcher
+	derivation
+	fragment
+	grammar
+	acceptor
+	RHSs(right hand sides) -> rules
+make_and_matcher
+	
+	derivation
+	fragment
+	grammar
+	acceptor
+	Lrule->symbols
+make_or_matcher
+	if rules = []
+	else
+		pick first rule; matches rules with head and tail; call make_and_matcher to get the return
+			some
+			none
+make_and_matcher
+	basecase(s)
+	head_symbol:tail_symbols
+		check if head is terminal or nonterminal
+			terminal:directly, nonterminal: call or !(hint:head symbol can find match, but in order for the particular matching to be acepted, you have to find a match for the tail too.
+				when you call the or for the head, you have to check if the tail symbols can find a match
+				how?)
+				
+				
+				
+				

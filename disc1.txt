@@ -1,0 +1,85 @@
+CS131 Discussion
+
+Thuy Vu
+thuyvu@cs.ucla.edu
+Wed 9-11 BH2432
+
+OCaml----------------------------
+add two numbers
+	let addxy x y = x + y;;
+	- val addxy: int -> int -> int = <fun>
+increase by 3
+	let add3 x = x + 3;;
+	- val add3: int -> int = <fun>
+	OR --
+	let add3   = addxy 3;;
+
+write a function
+	let max (a,b) = if a > b then a else b;;
+	let max = function
+	 | (a,b) -> if a > b then a else b;;
+	let max atuple = match atuple with
+	 | (a,b) -> if a . b then a else b;;
+	 
+	val max:'a*'a->'a=<fun>
+	
+Ocaml: recursive-factorial
+	let rec fact n =
+	 if n=1 then 1 else n * fact(n-1);;
+	let rec fact = function
+	 | 0 -> 1
+	 | n -> n * fact(n-1);;
+	val fact:int->int=<fun>
+
+OCaml: pattern match & list
+	let rec sumlist alist = match alist with
+	 | [] -> 0
+	 | head::tail -> head + sumlist tail;;
+	 
+OCaml last element
+	let rec last = function
+	 | [a] -> a
+	 | _::tail -> last tail
+	val last:'a list ->'a=<fun>
+	warning 8: not exhaustive, [] is not matched
+
+Concat 2 lists
+	let concat a b = a @ b;;
+	
+Reverse a list
+	let rec reverse = function
+	 | []->[]
+	 | head::tail -> (reverse tail)@[head]
+	 
+HW1
+	1.subset
+	2.proper_subset
+	3.equal_sets
+	4.set_diff
+	5.computed_fixed_point
+	6.computed_periodic_point
+	7.filter_blind_alleys
+	
+computed_fixed_point
+	fixed point is a point x s.t. f x = x
+	calculated by calculating x, f x, f(f x),.... stopping when found
+	let div2 x = x2
+	 - # div2 8;;
+	  - : int = 4
+computed_periodic_point
+	periodic point of a function f with period p is a point x s.t.
+		F(F...(f x)) = x
+		p occurences of f in the call, p instead of 11
+	for ex)
+		# let f x = x*. x -. 1.;;
+		val f : float -> float=<fun>
+		
+filter_blind_alleys
+	symbol: terminal and non terminal
+	Rule is a pair(left hand side nonterminal, rhside list of symbols)
+	Grammar consists of a nonterminal start symbol and a list of rules
+	parsing(hw2)
+		given a string 4+5+2				+
+		find a derivative tree			+		2
+		leaves are terminal			4		5
+		
